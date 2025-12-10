@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Socket } from "socket.io-client";
+import { API_URL } from "../config/api";
 
 interface GameMessage {
   id: string;
@@ -31,7 +32,7 @@ export default function GameChat({ currentUser, socket, gameId, opponent }: Prop
   useEffect(() => {
     const loadMessages = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/game-messages/${gameId}`);
+        const response = await fetch(`${API_URL}/game-messages/${gameId}`);
         if (response.ok) {
           const data = await response.json();
           setMessages(data);

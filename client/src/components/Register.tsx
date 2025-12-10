@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { register } from "../api/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { API_URL } from "../config/api";
 
 const RECAPTCHA_SITE_KEY = "6LdHqyYsAAAAABGQP20INCDpuDEowBa06KjOj-A9";
 
@@ -30,7 +31,7 @@ const Register: React.FC = () => {
   useEffect(() => {
     const fetchToken = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/register-token");
+        const response = await fetch(`${API_URL}/register-token`);
         const data = await response.json();
         setRegistrationToken(data.token);
         setLoading(false);
@@ -171,7 +172,7 @@ const Register: React.FC = () => {
       // if token expired, fetch a new one
       if (err.message.includes("token")) {
         try {
-          const response = await fetch("http://localhost:3001/api/register-token");
+          const response = await fetch(`${API_URL}/register-token`);
           const data = await response.json();
           setRegistrationToken(data.token);
           setError("Token expired. Please try again.");

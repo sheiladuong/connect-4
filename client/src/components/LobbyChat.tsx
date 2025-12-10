@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Socket } from "socket.io-client";
+import { API_URL } from "../config/api";
 
 interface Props {
   socket: Socket;
@@ -29,7 +30,7 @@ export default function LobbyChat({ socket }: Props) {
   useEffect(() => {
     const loadMessages = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/lobby-messages");
+        const response = await fetch(`${API_URL}/lobby-messages`);
         if (response.ok) {
           const data = await response.json();
           setMessages(data);
