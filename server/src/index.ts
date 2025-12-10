@@ -15,7 +15,8 @@ const dotenv = require("dotenv").config();
 const ALLOWED_ORIGINS = [
   'http://localhost:5173',
   'http://localhost:5174',
-  'https://your-vercel-app.vercel.app',
+  'https://connect-4-peach.vercel.app/',
+  'https://*.vercel.app',
 ];
 
 const TOKEN_SECRET = "tokensecret"; // for signing nonces
