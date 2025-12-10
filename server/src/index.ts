@@ -140,6 +140,16 @@ app.post('/api/register', async (req, res): Promise<any> => {
     return res.status(400).json({ error: 'Username must be between 3 and 50 characters' });
   }
 
+  const cleanUsername = sanitizeHtml(username, { allowedTags: [], allowedAttributes: {} }).trim();
+
+  if (!cleanUsername || cleanUsername !== username) {
+    return res.status(400).json({ error: "Invalid characters in username" });
+  }
+
+  if (!/^[a-zA-Z0-9_]+$/.test(cleanUsername)) {
+    return res.status(400).json({ error: "Username can only contain letters, numbers, and underscores" });
+  }
+
   if (password.length < 6) {
     return res.status(400).json({ error: 'Password must be at least 6 characters' });
   }
