@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'connect-4-production-c9c5.up.railway.app';
 
 interface RegisterResponse {
   message: string;

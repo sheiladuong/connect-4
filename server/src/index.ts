@@ -12,6 +12,12 @@ const app = express();
 const httpServer = createServer(app);
 const dotenv = require("dotenv").config();
 
+const ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://your-vercel-app.vercel.app',
+];
+
 const TOKEN_SECRET = "tokensecret"; // for signing nonces
 
 // store registration tokens
@@ -46,13 +52,13 @@ setInterval(() => {
 
 // app.use(cors({ origin: "http://localhost:5173" }));
 app.use(cors({ 
-  origin: true,  // Allow all origins temporarily
+  origin: ALLOWED_ORIGINS,
   credentials: true 
 }));
 
 const io = new Server(httpServer, {
   cors: { 
-    origin: true,  // Allow all origins temporarily
+    origin: ALLOWED_ORIGINS,
     credentials: true 
   },
 });
