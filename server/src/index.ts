@@ -16,7 +16,7 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5173',
   'http://localhost:5174',
   'https://connect-4-peach.vercel.app',
-  'https://connect-4-38jcbekou-sheilas-projects-33ec9dac.vercel.app',
+  'https://connect-4-9tucshkfw-sheilas-projects-33ec9dac.vercel.app',
 ];
 
 app.use(cors({ 
@@ -67,6 +67,9 @@ setInterval(() => {
 }, 5 * 60 * 1000);
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.set('trust proxy', true);
 
 const {PGHOST, PGDATABASE, PGUSER, PGPASSWORD} = process.env;
 
@@ -95,7 +98,10 @@ app.get('/', async (req, res) => {
 // auth routes
 // get registration token when registration page loads
 app.get('/api/register-token', (req, res) => {
-  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+  const forwardedFor = req.headers['x-forwarded-for'];
+  const forwardedIp = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor;
+  const ip = forwardedIp?.split(',')[0]?.trim() || req.ip || req.socket.remoteAddress || 'unknown';
+
   const userAgent = req.headers['user-agent'] || 'unknown';
   const timestamp = Date.now();
   const expiresAt = timestamp + (10 * 60 * 1000); // 10 minutes
@@ -146,7 +152,10 @@ app.post('/api/register', async (req, res): Promise<any> => {
     return res.status(403).json({ error: 'Invalid or expired registration token' });
   }
 
-  const currentIp = req.ip || req.socket.remoteAddress || 'unknown';
+  const forwardedFor = req.headers['x-forwarded-for'];
+  const forwardedIp = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor;
+  const currentIp = forwardedIp?.split(',')[0]?.trim() || req.ip || req.socket.remoteAddress || 'unknown';
+
   const currentUserAgent = req.headers['user-agent'] || 'unknown';
   const now = Date.now();
 
