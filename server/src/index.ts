@@ -15,9 +15,8 @@ const dotenv = require("dotenv").config();
 const ALLOWED_ORIGINS = [
   'http://localhost:5173',
   'http://localhost:5174',
-  'https://connect-4-peach.vercel.app/',
-  'https://vercel.com/sheilas-projects-33ec9dac/connect-4/51NwHDVRKknfSs1Td9VVAq6BY9u3',
-  /https:\/\/.*-sheilas-projects-33ec9dac\.vercel\.app$/
+  'https://connect-4-peach.vercel.app',
+  'https://connect-4-38jcbekou-sheilas-projects-33ec9dac.vercel.app',
 ];
 
 app.use(cors({ 
