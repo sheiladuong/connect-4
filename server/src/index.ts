@@ -12,10 +12,6 @@ const app = express();
 const httpServer = createServer(app);
 const dotenv = require("dotenv").config();
 
-const io = new Server(httpServer, {
-  cors: { origin: "*" },
-});
-
 const TOKEN_SECRET = "tokensecret"; // for signing nonces
 
 // store registration tokens
@@ -48,7 +44,19 @@ setInterval(() => {
   }
 }, 5 * 60 * 1000);
 
-app.use(cors({ origin: "http://localhost:5173" }));
+// app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ 
+  origin: true,  // Allow all origins temporarily
+  credentials: true 
+}));
+
+const io = new Server(httpServer, {
+  cors: { 
+    origin: true,  // Allow all origins temporarily
+    credentials: true 
+  },
+});
+
 app.use(express.json());
 
 const {PGHOST, PGDATABASE, PGUSER, PGPASSWORD} = process.env;
