@@ -60,7 +60,7 @@ export default function Connect4Game({ currentUser }: Props) {
     };
 
     // listen for opponent forfeit
-    const handleOpponentForfeited = ({ username }: { username: string }) => {
+    const handleOpponentForfeited = () => {
       setShowForfeitModal(true);
       setForfeitTimeLeft(10);
     };

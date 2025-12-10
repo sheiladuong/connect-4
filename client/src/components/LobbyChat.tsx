@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { Socket } from "socket.io-client";
 
 interface Props {
-  currentUser: { id: string; username: string };
   socket: Socket;
 }
 
@@ -15,7 +14,7 @@ interface LobbyMessage {
   system?: boolean;
 }
 
-export default function LobbyChat({ currentUser, socket }: Props) {
+export default function LobbyChat({ socket }: Props) {
   const [messages, setMessages] = useState<LobbyMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
