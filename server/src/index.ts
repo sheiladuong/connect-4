@@ -16,8 +16,43 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5173',
   'http://localhost:5174',
   'https://connect-4-peach.vercel.app/',
-  'https://*.vercel.app',
+  'https://vercel.com/sheilas-projects-33ec9dac/connect-4/51NwHDVRKknfSs1Td9VVAq6BY9u3',
+  /https:\/\/.*-sheilas-projects-33ec9dac\.vercel\.app$/
 ];
+
+app.use(cors({ 
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    if (ALLOWED_ORIGINS.some(allowed => {
+      if (typeof allowed === 'string') return allowed === origin;
+      return allowed.test(origin);
+    })) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true 
+}));
+
+const io = new Server(httpServer, {
+  cors: { 
+    origin: function(origin, callback) {
+      if (!origin) return callback(null, true);
+      
+      if (ALLOWED_ORIGINS.some(allowed => {
+        if (typeof allowed === 'string') return allowed === origin;
+        return allowed.test(origin);
+      })) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true 
+  },
+});
 
 const TOKEN_SECRET = "tokensecret"; // for signing nonces
 
@@ -50,19 +85,6 @@ setInterval(() => {
     }
   }
 }, 5 * 60 * 1000);
-
-// app.use(cors({ origin: "http://localhost:5173" }));
-app.use(cors({ 
-  origin: ALLOWED_ORIGINS,
-  credentials: true 
-}));
-
-const io = new Server(httpServer, {
-  cors: { 
-    origin: ALLOWED_ORIGINS,
-    credentials: true 
-  },
-});
 
 app.use(express.json());
 

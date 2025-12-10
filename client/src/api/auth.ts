@@ -25,6 +25,7 @@ export const register = async (
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({ username, password, token, captchaToken }),
   });
 
@@ -43,6 +44,7 @@ export const login = async (username: string, password: string): Promise<LoginRe
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({ username, password }),
   });
 
