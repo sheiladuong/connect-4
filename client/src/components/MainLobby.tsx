@@ -260,7 +260,7 @@ export default function MainLobby({ currentUser, onLogout }: Props) {
         </div>
 
         {/* lobby chat */}
-        <LobbyChat currentUser={currentUser} socket={socket} />
+        <LobbyChat socket={socket} />
       </div>
 
       {challengingSomeone && (
