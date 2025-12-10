@@ -21,36 +21,17 @@ const ALLOWED_ORIGINS = [
 ];
 
 app.use(cors({ 
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true);
-    
-    if (ALLOWED_ORIGINS.some(allowed => {
-      if (typeof allowed === 'string') return allowed === origin;
-      return allowed.test(origin);
-    })) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true 
+  origin: ALLOWED_ORIGINS,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 const io = new Server(httpServer, {
   cors: { 
-    origin: function(origin, callback) {
-      if (!origin) return callback(null, true);
-      
-      if (ALLOWED_ORIGINS.some(allowed => {
-        if (typeof allowed === 'string') return allowed === origin;
-        return allowed.test(origin);
-      })) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true 
+    origin: ALLOWED_ORIGINS,
+    credentials: true,
+    methods: ['GET', 'POST']
   },
 });
 
