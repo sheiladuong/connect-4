@@ -1,4 +1,4 @@
-const API_URL = 'connect-4-production-c9c5.up.railway.app';
+import { API_URL } from '../config/api';
 
 interface RegisterResponse {
   message: string;
